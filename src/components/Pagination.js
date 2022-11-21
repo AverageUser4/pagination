@@ -54,6 +54,18 @@ export default function Pagination() {
       </div>
     );
 
+  if(!shownFollowers.length)
+    return (
+      <div className="section-title">
+
+        <h1>No such page...</h1>
+        <div className="underline"></div>
+
+        <Link className="btn btn--solid" to="/1">Go to page 1</Link>
+
+      </div>
+    );
+
   return (
     <div>
 
