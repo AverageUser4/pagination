@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, Redirect } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { useFetch } from '../useFetch'
 import Follower from './Follower'
@@ -11,8 +11,9 @@ export default function Pagination() {
   page = page && parseInt(page);
   page = page ?? 1;
   
-  const maxPage = Math.max(Math.ceil(data.length / 10), 1);
-  const indices = { min: Math.max(0, page * 10 - 10), max: page * 10 - 1 };
+  const followersPerPage = 10;
+  const maxPage = Math.max(Math.ceil(data.length / followersPerPage), 1);
+  const indices = { min: Math.max(0, page * followersPerPage - followersPerPage), max: page * followersPerPage - 1 };
   const shownFollowers = data.filter((_, i) => i >= indices.min && i <= indices.max);
 
   const paginationButtons = [];
@@ -93,25 +94,28 @@ export default function Pagination() {
 
         </div>
 
-        <div className="btn-container">
+        {
+          maxPage > 1 &&
+            <div className="btn-container">
 
-          <Link 
-            className="prev-btn"
-            to={`/${getAdjacentPage(true)}`}
-          >
-            Prev
-          </Link>
+              <Link 
+                className="prev-btn"
+                to={`/${getAdjacentPage(true)}`}
+              >
+                Prev
+              </Link>
 
-            {paginationButtons}
+                {paginationButtons}
 
-          <Link 
-            className="next-btn"
-            to={`/${getAdjacentPage(false)}`}
-          >
-            Next
-          </Link>
+              <Link 
+                className="next-btn"
+                to={`/${getAdjacentPage(false)}`}
+              >
+                Next
+              </Link>
 
-        </div>
+            </div>
+        }
 
       </section>
 
